@@ -15,14 +15,14 @@ Agenda:
 *IMPORTANT*
   1. Before running any code, make sure you have **Python 3.11.9** installed.
   2. Install all of the packages mentioned below
-     a. pip install pandas
-     b. pip install matplotlib.pyplot
-     c. pip install seaborn
-     d. pip install neurokit2
-     e. pip install os
-     f. pip install datasets
-     g. pip install transformers
-     h. pip install torch
+    ** pip install pandas
+     pip install matplotlib.pyplot
+     pip install seaborn
+     pip install neurokit2
+     pip install os
+     pip install datasets
+     pip install transformers
+     pip install torch**
        (Basically look at any error message "Module not found" and install that package")
 
    3. Change all the necessary pathways to your local system. Eg. location path of input csv, output csv. etc.
