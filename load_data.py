@@ -1,7 +1,5 @@
 import pandas as pd
 import sys # Import sys to check Python version
-import matplotlib.pyplot as plt
-import seaborn as sns
 
 def load_data(file_path):
     print(f"[INFO] Attempting to load data from: {file_path}")
@@ -156,7 +154,9 @@ if __name__ == "__main__":
     print(f"Python version: {sys.version}")
     print(f"Pandas version: {pd.__version__}")
 
-    csv_file_path = r'F:\Users\Aryan\Documents\IAE-M\THI_Notes_Files\Group Project\Source Code\Data_Files\drowsiness_dataset.csv'
+    # --- Use the specific file path you provided ---
+    # The 'r' before the string handles the backslashes in the Windows path
+    csv_file_path = r'C:\Sarthak\THI\sem 3\project vs code files\drowsiness_dataset.csv'
 
     data_frame = load_data(csv_file_path)
 

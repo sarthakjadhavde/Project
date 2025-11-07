@@ -23,7 +23,7 @@ PPG_COLUMN = 'ppgGreen'
 
 # 3. WINDOW_SECONDS: Duration of each analysis window in seconds.
 #    60 seconds is a common starting point for HRV.
-WINDOW_SECONDS = 1200 #changed from 60 to 300 to clear all warnings
+WINDOW_SECONDS = 60
 # --- END CONFIGURATION ---
 
 def engineer_features(df):
@@ -204,10 +204,7 @@ def create_combined_dataset(features_df, labels_array):
 if __name__ == "__main__":
     print(f"NeuroKit2 version: {nk.__version__}")
 
-    # --- Define File Paths ---
-    input_csv_path = r'F:\Users\Aryan\Documents\IAE-M\THI_Notes_Files\Group Project\Source Code\Data_Files\drowsiness_dataset.csv'
-    # --- [NEW] Define an output path for the clean, engineered file ---
-    output_features_path = r'F:\Users\Aryan\Documents\IAE-M\THI_Notes_Files\Group Project\Source Code\Data_Files\engineered_features_dataset.csv'
+    csv_file_path = r'C:\Sarthak\THI\sem 3\project vs code files\drowsiness_dataset.csv'
 
     # 1. Load data using the function from the other file
     raw_data_df = load_data(input_csv_path)
