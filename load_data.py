@@ -1,5 +1,5 @@
 import pandas as pd
-import sys # Import sys to check Python version
+import sys # Import sys to check Python versionpthy
 
 def load_data(file_path):
     print(f"[INFO] Attempting to load data from: {file_path}")
@@ -39,7 +39,7 @@ if __name__ == "__main__":
 
     # --- Use the specific file path you provided ---
     # The 'r' before the string handles the backslashes in the Windows path
-    csv_file_path = r'C:\Sarthak\THI\sem 3\project vs code files\drowsiness_dataset.csv'
+    csv_file_path = r'F:\Users\Aryan\Documents\IAE-M\THI_Notes_Files\Group Project\Source Code\Data_Files\new_dataset\train_dataset.csv'
 
     # Call the function to load the data
     data_frame = load_data(csv_file_path)

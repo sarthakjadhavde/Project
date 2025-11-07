@@ -19,11 +19,11 @@ SAMPLING_RATE = 25  # Hz (Samples per second)
 
 # 2. PPG_COLUMN: Choose the PPG signal column to analyze.
 #    'ppgIR' or 'ppgGreen' are often good choices.
-PPG_COLUMN = 'ppgIR'
+PPG_COLUMN = 'ppgGreen'
 
 # 3. WINDOW_SECONDS: Duration of each analysis window in seconds.
 #    60 seconds is a common starting point for HRV.
-WINDOW_SECONDS = 60
+WINDOW_SECONDS = 60 #changed from 60 to 10 for testing
 # --- END CONFIGURATION ---
 
 def engineer_features(df):
@@ -163,10 +163,10 @@ def engineer_features(df):
         return None, None
 
 # --- Main execution block for testing this module ---(function block for testing)
-# if __name__ == "__main__":
+if __name__ == "__main__":
     print(f"NeuroKit2 version: {nk.__version__}")
 
-    csv_file_path = r'C:\Sarthak\THI\sem 3\project vs code files\drowsiness_dataset.csv'
+    csv_file_path = r'F:\Users\Aryan\Documents\IAE-M\THI_Notes_Files\Group Project\Source Code\Data_Files\drowsiness_dataset.csv'
 
     # 1. Load data using the function from the other file
     raw_data_df = load_data(csv_file_path)
