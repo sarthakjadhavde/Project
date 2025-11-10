@@ -19,11 +19,11 @@ SAMPLING_RATE = 25  # Hz (Samples per second)
 
 # 2. PPG_COLUMN: Choose the PPG signal column to analyze.
 #    'ppgIR' or 'ppgGreen' are often good choices.
-PPG_COLUMN = 'ppgIR'
+PPG_COLUMN = 'ppgGreen'
 
 # 3. WINDOW_SECONDS: Duration of each analysis window in seconds.
 #    60 seconds is a common starting point for HRV.
-WINDOW_SECONDS = 60
+WINDOW_SECONDS = 1200 #changed from 60 to 300 to clear all warnings
 # --- END CONFIGURATION ---
 
 def engineer_features(df):
@@ -161,15 +161,56 @@ def engineer_features(df):
     except Exception as e:
         print(f"[ERROR] Failed to create or clean the final DataFrame from features: {e}")
         return None, None
+    
+def create_combined_dataset(features_df, labels_array):
+    """
+    Combines the feature DataFrame (X) and the labels array (y) into a
+    single DataFrame for easy saving and analysis.
 
+    Args:
+        features_df (pd.DataFrame): The DataFrame of HRV features (X).
+        labels_array (np.array): The NumPy array of corresponding labels (y).
+
+    Returns:
+        pd.DataFrame: A new, single DataFrame with the labels included
+                      as a column named 'drowsiness_label'.
+                      Returns None if inputs are invalid.
+    """
+    if features_df is None or labels_array is None:
+        print("[ERROR] Cannot combine dataset: features or labels are None.")
+        return None
+
+    if len(features_df) != len(labels_array):
+        print(f"[ERROR] Mismatch in length: Features have {len(features_df)} rows, "
+              f"but labels have {len(labels_array)} entries.")
+        return None
+
+    try:
+        # Create a copy to avoid modifying the original DataFrame in-place
+        combined_df = features_df.copy()
+
+        # Assign the labels array as a new column.
+        # This is robust as it assigns by position.
+        combined_df['drowsiness_label'] = labels_array
+
+        print(f"[INFO] Successfully combined features and labels into new DataFrame with shape: {combined_df.shape}")
+        return combined_df
+
+    except Exception as e:
+        print(f"[ERROR] An error occurred while combining features and labels: {e}")
+        return None
+    
 # --- Main execution block for testing this module ---(function block for testing)
-# if __name__ == "__main__":
+if __name__ == "__main__":
     print(f"NeuroKit2 version: {nk.__version__}")
 
-    csv_file_path = r'C:\Sarthak\THI\sem 3\project vs code files\drowsiness_dataset.csv'
+    # --- Define File Paths ---
+    input_csv_path = r'F:\Users\Aryan\Documents\IAE-M\THI_Notes_Files\Group Project\Source Code\Data_Files\drowsiness_dataset.csv'
+    # --- [NEW] Define an output path for the clean, engineered file ---
+    output_features_path = r'F:\Users\Aryan\Documents\IAE-M\THI_Notes_Files\Group Project\Source Code\Data_Files\engineered_features_dataset.csv'
 
     # 1. Load data using the function from the other file
-    raw_data_df = load_data(csv_file_path)
+    raw_data_df = load_data(input_csv_path)
 
     # 2. If data loaded, perform feature engineering
     if raw_data_df is not None:
@@ -181,7 +222,26 @@ def engineer_features(df):
             print(features_df.head())
             print("\nLabels (y) shape:", labels_array.shape)
             print("Unique labels found:", np.unique(labels_array, return_counts=True))
-            print("\n[SUCCESS] Feature engineering module executed successfully.")
+
+            # --- [NEW] Use the new function to combine X and y ---
+            print("\n--- Combining Features and Labels ---")
+            combined_dataset = create_combined_dataset(features_df, labels_array)
+
+            if combined_dataset is not None:
+                print("First 5 rows of *combined* dataset:")
+                print(combined_dataset.head())
+
+                # --- [NEW] Save the final, clean dataset to a new CSV ---
+                try:
+                    combined_dataset.to_csv(output_features_path, index=False)
+                    print(f"\n[SUCCESS] Successfully saved engineered features to:")
+                    print(f"{output_features_path}")
+                except Exception as e:
+                    print(f"\n[ERROR] Failed to save final dataset to CSV: {e}")
+
+            else:
+                print("\n[FAILURE] Could not create combined dataset.")
+
         else:
             print("\n[FAILURE] Feature engineering did not produce usable features.")
     else:
