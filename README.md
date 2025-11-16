@@ -57,7 +57,7 @@ These scripts use the models you just built.
 
 ## 3. 🛠️ Installation
 
-You will need the following Python libraries. You can install them via pip:
+You will need the following Python libraries. You can install them Via pip:
 
 ```bash
 pip install pandas numpy scikit-learn
